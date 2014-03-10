@@ -1,0 +1,25 @@
+CC= g++
+OBJS= $(SRCS:.cpp=.o)
+
+IGNORE_DEPRECATED=-Wno-deprecated
+
+# Debug information?
+#CPPFLAGS= -g -O2 $(addprefix -I, $(INCDIR)) -I/usr/include $(addprefix -D, $(DEFINES)) $(IGNORE_DEPRECATED)
+CPPFLAGS= -O2 $(addprefix -I, $(INCDIR)) -I/usr/include $(addprefix -D, $(DEFINES)) $(IGNORE_DEPRECATED)
+
+OBJDIR= objs
+
+vpath %.o $(OBJDIR)
+#################### Start the action #########################
+
+default: $(OBJS)
+#	@echo $(OBJS)
+	
+%.o:  %.cpp
+	mkdir -p $(OBJDIR);
+	$(CC) $(CPPFLAGS) -c $*.cpp -o $(OBJDIR)/$*.o
+	
+clean_template:
+	-rm *.bak *.bac
+	rm -rf  $(OBJDIR)/*; 
+	-rmdir  $(OBJDIR) 
